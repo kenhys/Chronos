@@ -4238,8 +4238,21 @@ void CSazabi::UnInitializeCef()
 		m_cefApp = nullptr;
 		if (!m_bMultiThreadedMessageLoop)
 			CefDoMessageLoopWork();
+#if 0
 		// shutdown CEF
 		CefShutdown();
+#else
+		// FIXME:
+		// As parent Chronos.exe process remains because
+		// exception occurs on libcef.dll side. The browser
+		// should be closed correctly in beforehand, but it is
+		// not in current implementation.
+		//
+		// As a last resort, we terminates parent process
+		// explicitly instead of shutdown CEF correctly with
+		// CefShutdown() here.
+		SafeTerminateProcess(m_hProcess, 0);
+#endif
 	}
 }
 BOOL CSazabi::IsURLFilterAllow(LPCTSTR sURL,
