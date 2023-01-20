@@ -134,17 +134,95 @@ bool ClientHandler::OnOpenURLFromTab(CefRefPtr<CefBrowser> browser,
 		{
 			case cef_window_open_disposition_t::WOD_NEW_FOREGROUND_TAB:
 			{
-				::SendMessageTimeout(hWindow, WM_NEW_WINDOW_URL, (WPARAM)target_disposition, (LPARAM)pszURL, SMTO_NORMAL, 1000, NULL);
+				LRESULT lResult = ::SendMessageTimeout(hWindow, WM_NEW_WINDOW_URL, (WPARAM)target_disposition, (LPARAM)pszURL, SMTO_NORMAL, 1000, NULL);
+				if (theApp.m_AppSettings.IsAdvancedLogMode() && theApp.m_AppSettings.GetAdvancedLogLevel() == DEBUG_LOG_LEVEL_OUTPUT_ALL)
+				{
+					DebugWndLogData dwLogData;
+					CString logmsg;
+					dwLogData.mHWND.Format(_T("WND:0x%08x"), hWindow);
+					dwLogData.mFUNCTION_NAME = _T("ClientHandler::OnOpenURLFromTab");
+					if (lResult == ERROR_SUCCESS)
+					{
+						DWORD dwErr = GetLastError();
+						if (dwErr == ERROR_TIMEOUT)
+						{
+							dwLogData.mMESSAGE1 = _T("TIMEOUT: SendMessageTimeout WOD_NEW_FOREGROUND_TAB");
+							theApp.WriteDebugTraceDateTime(dwLogData.GetString(), DEBUG_LOG_TYPE_DE);
+						}
+						else
+						{
+							dwLogData.mMESSAGE1 = _T("ERROR: SendMessageTimeout WOD_NEW_FOREGROUND_TAB");
+							theApp.WriteDebugTraceDateTime(dwLogData.GetString(), DEBUG_LOG_TYPE_DE);
+						}
+					}
+					else
+					{
+						dwLogData.mMESSAGE1 = _T("SUCCESS: SendMessageTimeout WOD_NEW_FOREGROUND_TAB");
+						theApp.WriteDebugTraceDateTime(dwLogData.GetString(), DEBUG_LOG_TYPE_DE);
+					}
+				}
 				return true;
 			}
 			case cef_window_open_disposition_t::WOD_NEW_BACKGROUND_TAB:
 			{
-				::SendMessageTimeout(hWindow, WM_NEW_WINDOW_URL, (WPARAM)target_disposition, (LPARAM)pszURL, SMTO_NORMAL, 1000, NULL);
+				LRESULT lResult = ::SendMessageTimeout(hWindow, WM_NEW_WINDOW_URL, (WPARAM)target_disposition, (LPARAM)pszURL, SMTO_NORMAL, 1000, NULL);
+				if (theApp.m_AppSettings.IsAdvancedLogMode() && theApp.m_AppSettings.GetAdvancedLogLevel() == DEBUG_LOG_LEVEL_OUTPUT_ALL)
+				{
+					DebugWndLogData dwLogData;
+					CString logmsg;
+					dwLogData.mHWND.Format(_T("WND:0x%08x"), hWindow);
+					dwLogData.mFUNCTION_NAME = _T("ClientHandler::OnOpenURLFromTab");
+					if (lResult == ERROR_SUCCESS)
+					{
+						DWORD dwErr = GetLastError();
+						if (dwErr == ERROR_TIMEOUT)
+						{
+							dwLogData.mMESSAGE1 = _T("TIMEOUT: SendMessageTimeout WOD_NEW_BACKGROUND_TAB");
+							theApp.WriteDebugTraceDateTime(dwLogData.GetString(), DEBUG_LOG_TYPE_DE);
+						}
+						else
+						{
+							dwLogData.mMESSAGE1 = _T("ERROR: SendMessageTimeout WOD_NEW_BACKGROUND_TAB");
+							theApp.WriteDebugTraceDateTime(dwLogData.GetString(), DEBUG_LOG_TYPE_DE);
+						}
+					}
+					else
+					{
+						dwLogData.mMESSAGE1 = _T("SUCCESS: SendMessageTimeout WOD_NEW_BACKGROUND_TAB");
+						theApp.WriteDebugTraceDateTime(dwLogData.GetString(), DEBUG_LOG_TYPE_DE);
+					}
+				}
 				return true;
 			}
 			case cef_window_open_disposition_t::WOD_NEW_WINDOW:
 			{
-				::SendMessageTimeout(hWindow, WM_NEW_WINDOW_URL, (WPARAM)target_disposition, (LPARAM)pszURL, SMTO_NORMAL, 1000, NULL);
+				LRESULT lResult = ::SendMessageTimeout(hWindow, WM_NEW_WINDOW_URL, (WPARAM)target_disposition, (LPARAM)pszURL, SMTO_NORMAL, 1000, NULL);
+				if (theApp.m_AppSettings.IsAdvancedLogMode() && theApp.m_AppSettings.GetAdvancedLogLevel() == DEBUG_LOG_LEVEL_OUTPUT_ALL)
+				{
+					DebugWndLogData dwLogData;
+					CString logmsg;
+					dwLogData.mHWND.Format(_T("WND:0x%08x"), hWindow);
+					dwLogData.mFUNCTION_NAME = _T("ClientHandler::OnOpenURLFromTab");
+					if (lResult == ERROR_SUCCESS)
+					{
+						DWORD dwErr = GetLastError();
+						if (dwErr == ERROR_TIMEOUT)
+						{
+							dwLogData.mMESSAGE1 = _T("TIMEOUT: SendMessageTimeout WOD_NEW_WINDOW");
+							theApp.WriteDebugTraceDateTime(dwLogData.GetString(), DEBUG_LOG_TYPE_DE);
+						}
+						else
+						{
+							dwLogData.mMESSAGE1 = _T("ERROR: SendMessageTimeout WOD_NEW_WINDOW");
+							theApp.WriteDebugTraceDateTime(dwLogData.GetString(), DEBUG_LOG_TYPE_DE);
+						}
+					}
+					else
+					{
+						dwLogData.mMESSAGE1 = _T("SUCCESS: SendMessageTimeout WOD_NEW_WINDOW");
+						theApp.WriteDebugTraceDateTime(dwLogData.GetString(), DEBUG_LOG_TYPE_DE);
+					}
+				}
 				return true;
 			}
 			default:break;
@@ -529,7 +607,39 @@ void ClientHandler::OnLoadingStateChange(CefRefPtr<CefBrowser> browser, bool isL
 	if (SafeWnd(hWindow))
 	{
 		// send message
-		::SendMessageTimeout(hWindow, WM_APP_CEF_STATE_CHANGE, (WPARAM)nState, NULL, SMTO_NORMAL, 1000, NULL);
+		LRESULT lResult = ::SendMessageTimeout(hWindow, WM_APP_CEF_STATE_CHANGE, (WPARAM)nState, NULL, SMTO_NORMAL, 1000, NULL);
+		if (theApp.m_AppSettings.IsAdvancedLogMode() && theApp.m_AppSettings.GetAdvancedLogLevel() == DEBUG_LOG_LEVEL_OUTPUT_ALL)
+		{
+			DebugWndLogData dwLogData;
+			CString logmsg;
+			dwLogData.mHWND.Format(_T("WND:0x%08x"), hWindow);
+			dwLogData.mFUNCTION_NAME = _T("ClientHandler::OnLoadingStateChange");
+			if (lResult == ERROR_SUCCESS)
+			{
+				DWORD dwErr = GetLastError();
+				if (dwErr == ERROR_TIMEOUT)
+				{
+					dwLogData.mMESSAGE1 = _T("TIMEOUT: SendMessageTimeout");
+					logmsg.Format(_T("nState: %ld"), nState);
+					dwLogData.mMESSAGE2 = logmsg;
+					theApp.WriteDebugTraceDateTime(dwLogData.GetString(), DEBUG_LOG_TYPE_DE);
+				}
+				else
+				{
+					dwLogData.mMESSAGE1 = _T("ERROR: SendMessageTimeout");
+					logmsg.Format(_T("nState: %ld"), nState);
+					dwLogData.mMESSAGE2 = logmsg;
+					theApp.WriteDebugTraceDateTime(dwLogData.GetString(), DEBUG_LOG_TYPE_DE);
+				}
+			}
+			else
+			{
+				dwLogData.mMESSAGE1 = _T("SUCCESS: SendMessageTimeout");
+				logmsg.Format(_T("nState: %ld"), nState);
+				dwLogData.mMESSAGE2 = logmsg;
+				theApp.WriteDebugTraceDateTime(dwLogData.GetString(), DEBUG_LOG_TYPE_DE);
+			}
+		}
 	}
 	// call parent
 	CefLoadHandler::OnLoadingStateChange(browser, isLoading, canGoBack, canGoForward);
@@ -580,7 +690,35 @@ void ClientHandler::OnLoadingProgressChange(CefRefPtr<CefBrowser> browser, doubl
 		DWORD dwProgress = 0;
 		dwProgress = (DWORD)ulProgress;
 
-		::SendMessageTimeout(hWindow, WM_APP_CEF_PROGRESS_CHANGE, (WPARAM)dwProgress, NULL, SMTO_NORMAL, 1000, NULL);
+		LRESULT lResult = ::SendMessageTimeout(hWindow, WM_APP_CEF_PROGRESS_CHANGE, (WPARAM)dwProgress, NULL, SMTO_NORMAL, 1000, NULL);
+		if (theApp.m_AppSettings.IsAdvancedLogMode() && theApp.m_AppSettings.GetAdvancedLogLevel() == DEBUG_LOG_LEVEL_OUTPUT_ALL)
+		{
+			DebugWndLogData dwLogData;
+			CString logmsg;
+			dwLogData.mHWND.Format(_T("WND:0x%08x"), hWindow);
+			dwLogData.mFUNCTION_NAME = _T("ClientHandler::OnLoadingProgressChange");
+			if (lResult == ERROR_SUCCESS)
+			{
+				DWORD dwErr = GetLastError();
+				if (dwErr == ERROR_TIMEOUT)
+				{
+					dwLogData.mMESSAGE1 = _T("TIMEOUT: SendMessageTimeout");
+					theApp.WriteDebugTraceDateTime(dwLogData.GetString(), DEBUG_LOG_TYPE_DE);
+				}
+				else
+				{
+					dwLogData.mMESSAGE1 = _T("ERROR: SendMessageTimeout");
+					theApp.WriteDebugTraceDateTime(dwLogData.GetString(), DEBUG_LOG_TYPE_DE);
+				}
+			}
+			else
+			{
+				dwLogData.mMESSAGE1 = _T("SUCCESS: SendMessageTimeout");
+				logmsg.Format(_T("dwProgress: %ld"), dwProgress);
+				dwLogData.mMESSAGE2 = logmsg;
+				theApp.WriteDebugTraceDateTime(dwLogData.GetString(), DEBUG_LOG_TYPE_DE);
+			}
+		}
 	}
 	// call parent
 	CefDisplayHandler::OnLoadingProgressChange(browser, progress);
@@ -1048,7 +1186,7 @@ cef_return_value_t ClientHandler::OnBeforeResourceLoad(
 	{
 		DebugWndLogData dwLogData;
 		dwLogData.mHWND.Format(_T("CV_WND:0x%08x"), hWindow);
-		dwLogData.mFUNCTION_NAME = _T("OnBeforeResourceLoad");
+		dwLogData.mFUNCTION_NAME = _T("ClientHandler::OnBeforeResourceLoad");
 		dwLogData.mMESSAGE1 = strTranURL;
 		dwLogData.mMESSAGE2.Format(_T("FrameName:%s"), frame->GetName().c_str());
 		dwLogData.mMESSAGE3.Format(_T("IsMain:%s"), frame->IsMain() ? _T("TRUE") : _T("FALSE"));
@@ -1125,12 +1263,30 @@ cef_return_value_t ClientHandler::OnBeforeResourceLoad(
 			request->SetHeaderMap(cefHeaders);
 		}
 
+		if (theApp.m_AppSettings.IsAdvancedLogMode() && theApp.m_AppSettings.GetAdvancedLogLevel() == DEBUG_LOG_LEVEL_OUTPUT_ALL)
+		{
+			DebugWndLogData dwLogData;
+			dwLogData.mHWND.Format(_T("WND:0x%08x"), hWindow);
+			dwLogData.mFUNCTION_NAME = _T("ClientHandler::OnBeforeResourceLoad");
+			dwLogData.mMESSAGE1 = _T("before calling IsEnableURLFilter");
+			theApp.WriteDebugTraceDateTime(dwLogData.GetString(), DEBUG_LOG_TYPE_DE);
+		}
+
 		if (!theApp.m_AppSettings.IsEnableURLFilter())
 			return RV_CONTINUE;
 
 		CString strURLChk; //Queryを除く。無駄な情報を省く。
 		//strURLChk.Format(_T("%s://%s%s"), strScheme, strHost, strPath);
 		strURLChk.Format(_T("%s://%s"), strScheme, strHost);
+
+		if (theApp.m_AppSettings.IsAdvancedLogMode() && theApp.m_AppSettings.GetAdvancedLogLevel() == DEBUG_LOG_LEVEL_OUTPUT_ALL)
+		{
+			DebugWndLogData dwLogData;
+			dwLogData.mHWND.Format(_T("WND:0x%08x"), hWindow);
+			dwLogData.mFUNCTION_NAME = _T("ClientHandler::OnBeforeResourceLoad");
+			dwLogData.mMESSAGE1 = _T("before calling IsURLFilterAllow");
+			theApp.WriteDebugTraceDateTime(dwLogData.GetString(), DEBUG_LOG_TYPE_DE);
+		}
 
 		if (theApp.IsURLFilterAllow(strURLChk, strScheme, strHost, strPath))
 		{
@@ -1141,6 +1297,14 @@ cef_return_value_t ClientHandler::OnBeforeResourceLoad(
 			callback->Cancel();
 			return RV_CANCEL;
 		}
+	}
+	if (theApp.m_AppSettings.IsAdvancedLogMode() && theApp.m_AppSettings.GetAdvancedLogLevel() == DEBUG_LOG_LEVEL_OUTPUT_ALL)
+	{
+		DebugWndLogData dwLogData;
+		dwLogData.mHWND.Format(_T("WND:0x%08x"), hWindow);
+		dwLogData.mFUNCTION_NAME = _T("ClientHandler::OnBeforeResourceLoad");
+		dwLogData.mMESSAGE1 = _T("quit with RV_CONTINUE");
+		theApp.WriteDebugTraceDateTime(dwLogData.GetString(), DEBUG_LOG_TYPE_DE);
 	}
 	return RV_CONTINUE;
 }
@@ -1156,9 +1320,49 @@ void ClientHandler::OnLoadStart(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFram
 		if (SafeWnd(hWindow))
 		{
 
+			if (theApp.m_AppSettings.IsAdvancedLogMode() && theApp.m_AppSettings.GetAdvancedLogLevel() == DEBUG_LOG_LEVEL_OUTPUT_ALL)
+                        {
+				DebugWndLogData dwLogData;
+				dwLogData.mHWND.Format(_T("WND:0x%08x"), hWindow);
+				dwLogData.mFUNCTION_NAME = _T("ClientHandler::OnLoadStart");
+				dwLogData.mMESSAGE1 = _T("before calling SendMessageTimeout");
+				theApp.WriteDebugTraceDateTime(dwLogData.GetString(), DEBUG_LOG_TYPE_DE);
+			}
 			// send message
-			::SendMessageTimeout(hWindow, WM_APP_CEF_LOAD_START, NULL, NULL, SMTO_NORMAL, 1000, NULL);
-		}
+			LRESULT lResult = ::SendMessageTimeout(hWindow, WM_APP_CEF_LOAD_START, NULL, NULL, SMTO_NORMAL, 1000, NULL);
+			if (theApp.m_AppSettings.IsAdvancedLogMode() && theApp.m_AppSettings.GetAdvancedLogLevel() == DEBUG_LOG_LEVEL_OUTPUT_ALL)
+			{
+				DebugWndLogData dwLogData;
+				dwLogData.mHWND.Format(_T("WND:0x%08x"), hWindow);
+				dwLogData.mFUNCTION_NAME = _T("ClientHandler::OnLoadStart");
+				if (lResult == ERROR_SUCCESS)
+				{
+					DWORD dwErr = GetLastError();
+					if (dwErr == ERROR_TIMEOUT)
+					{
+						dwLogData.mMESSAGE1 = _T("TIMEOUT: SendMessageTimeout");
+						theApp.WriteDebugTraceDateTime(dwLogData.GetString(), DEBUG_LOG_TYPE_DE);
+					}
+					else
+					{
+						dwLogData.mMESSAGE1 = _T("ERROR: SendMessageTimeout");
+						theApp.WriteDebugTraceDateTime(dwLogData.GetString(), DEBUG_LOG_TYPE_DE);
+					}
+				}
+				else
+				{
+					dwLogData.mMESSAGE1 = _T("SUCCESS: SendMessageTimeout");
+					theApp.WriteDebugTraceDateTime(dwLogData.GetString(), DEBUG_LOG_TYPE_DE);
+				}
+			}
+                }
+	}
+	if (theApp.m_AppSettings.IsAdvancedLogMode() && theApp.m_AppSettings.GetAdvancedLogLevel() == DEBUG_LOG_LEVEL_OUTPUT_ALL)
+	{
+		DebugWndLogData dwLogData;
+		dwLogData.mFUNCTION_NAME = _T("ClientHandler::OnLoadStart");
+		dwLogData.mMESSAGE1 = _T("before calling CefLoadHandler::OnLoadStart");
+		theApp.WriteDebugTraceDateTime(dwLogData.GetString(), DEBUG_LOG_TYPE_DE);
 	}
 	// call parent
 	CefLoadHandler::OnLoadStart(browser, frame, transition_type);
@@ -1175,7 +1379,39 @@ void ClientHandler::OnLoadEnd(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame>
 		if (SafeWnd(hWindow))
 		{
 			// send message
-			::SendMessageTimeout(hWindow, WM_APP_CEF_LOAD_END, httpStatusCode, NULL, SMTO_NORMAL, 1000, NULL);
+			LRESULT lResult = ::SendMessageTimeout(hWindow, WM_APP_CEF_LOAD_END, httpStatusCode, NULL, SMTO_NORMAL, 1000, NULL);
+			if (theApp.m_AppSettings.IsAdvancedLogMode() && theApp.m_AppSettings.GetAdvancedLogLevel() == DEBUG_LOG_LEVEL_OUTPUT_ALL)
+			{
+				CString logmsg;
+				DebugWndLogData dwLogData;
+				dwLogData.mHWND.Format(_T("WND:0x%08x"), hWindow);
+				dwLogData.mFUNCTION_NAME = _T("ClientHandler::OnLoadEnd");
+				if (lResult == ERROR_SUCCESS)
+				{
+					DWORD dwErr = GetLastError();
+					if (dwErr == ERROR_TIMEOUT)
+					{
+						dwLogData.mMESSAGE1 = _T("TIMEOUT: SendMessageTimeout");
+						logmsg.Format(_T("httpStatusCode: %ld"), httpStatusCode);
+						dwLogData.mMESSAGE2 = logmsg;
+						theApp.WriteDebugTraceDateTime(dwLogData.GetString(), DEBUG_LOG_TYPE_DE);
+					}
+					else
+					{
+						dwLogData.mMESSAGE1 = _T("ERROR: SendMessageTimeout");
+						logmsg.Format(_T("httpStatusCode: %ld"), httpStatusCode);
+						dwLogData.mMESSAGE2 = logmsg;
+						theApp.WriteDebugTraceDateTime(dwLogData.GetString(), DEBUG_LOG_TYPE_DE);
+					}
+				}
+				else
+				{
+					dwLogData.mMESSAGE1 = _T("SUCCESS: SendMessageTimeout");
+					logmsg.Format(_T("httpStatusCode: %ld"), httpStatusCode);
+					dwLogData.mMESSAGE2 = logmsg;
+					theApp.WriteDebugTraceDateTime(dwLogData.GetString(), DEBUG_LOG_TYPE_DE);
+				}
+			}
 			if (httpStatusCode == 200)
 			{
 				if (theApp.m_AppSettings.IsEnableCustomScript())
@@ -1741,7 +1977,39 @@ bool ClientHandler::OnBeforeBrowse(CefRefPtr<CefBrowser> browser, CefRefPtr<CefF
 			if (frame->IsMain())
 				bTopPage = TRUE;
 		}
-		::SendMessageTimeout(hWindow, WM_APP_CEF_BEFORE_BROWSE, (WPARAM)pszURL, (LPARAM)&bTopPage, SMTO_NORMAL, 1000, NULL);
+		LRESULT lResult = ::SendMessageTimeout(hWindow, WM_APP_CEF_BEFORE_BROWSE, (WPARAM)pszURL, (LPARAM)&bTopPage, SMTO_NORMAL, 1000, NULL);
+		if (theApp.m_AppSettings.IsAdvancedLogMode() && theApp.m_AppSettings.GetAdvancedLogLevel() == DEBUG_LOG_LEVEL_OUTPUT_ALL)
+		{
+			DebugWndLogData dwLogData;
+			CString logmsg;
+			dwLogData.mHWND.Format(_T("WND:0x%08x"), hWindow);
+			dwLogData.mFUNCTION_NAME = _T("ClientHandler::OnBeforeBrowse");
+			if (lResult == ERROR_SUCCESS)
+			{
+				DWORD dwErr = GetLastError();
+				if (dwErr == ERROR_TIMEOUT)
+				{
+					dwLogData.mMESSAGE1 = _T("TIMEOUT: SendMessageTimeout");
+					logmsg.Format(_T("pszURL: %s"), pszURL);
+					dwLogData.mMESSAGE2 = logmsg;
+					theApp.WriteDebugTraceDateTime(dwLogData.GetString(), DEBUG_LOG_TYPE_DE);
+				}
+				else
+				{
+					dwLogData.mMESSAGE1 = _T("ERROR: SendMessageTimeout");
+					logmsg.Format(_T("pszURL: %s"), pszURL);
+					dwLogData.mMESSAGE2 = logmsg;
+					theApp.WriteDebugTraceDateTime(dwLogData.GetString(), DEBUG_LOG_TYPE_DE);
+				}
+			}
+			else
+			{
+				dwLogData.mMESSAGE1 = _T("SUCCESS: SendMessageTimeout");
+				logmsg.Format(_T("pszURL: %s"), pszURL);
+				dwLogData.mMESSAGE2 = logmsg;
+				theApp.WriteDebugTraceDateTime(dwLogData.GetString(), DEBUG_LOG_TYPE_DE);
+			}
+		}
 		//ナビゲーションをキャンセルする。
 		if (bTopPage == 2)
 		{
@@ -1765,6 +2033,12 @@ bool ClientHandler::OnBeforeBrowse(CefRefPtr<CefBrowser> browser, CefRefPtr<CefF
 				}
 			}
 		}
+	}
+	if (theApp.m_AppSettings.IsAdvancedLogMode() && theApp.m_AppSettings.GetAdvancedLogLevel() == DEBUG_LOG_LEVEL_OUTPUT_ALL)
+	{
+		DebugWndLogData dwLogData;
+		dwLogData.mMESSAGE1 = _T("Before calling CefRequestHandler::OnBeforeBrowse");
+		theApp.WriteDebugTraceDateTime(dwLogData.GetString(), DEBUG_LOG_TYPE_DE);
 	}
 	// call parent
 	return CefRequestHandler::OnBeforeBrowse(browser, frame, request, user_gesture, is_redirect);
