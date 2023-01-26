@@ -6,6 +6,7 @@
 #define new DEBUG_NEW
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
+#define LOG_MILLISECONDS 1
 #endif
 
 BEGIN_MESSAGE_MAP(CSazabi, CWinApp)
@@ -2321,8 +2322,17 @@ void CSazabi::WriteDebugTraceDateTime(LPCTSTR msg, int iLogType)
 	if (_tcslen(msg) == 0) return;
 
 	CString strWriteLine;
+#ifdef LOG_MILLISECONDS
+	SYSTEMTIME time;
+	GetLocalTime(&time);
+	strWriteLine.Format(_T("%u-%02u-%02u %02u:%02u:%02u.%03u\t%s\t%s\n"),
+			    time.wYear, time.wMonth, time.wDay,
+			    time.wHour, time.wMinute, time.wSecond,
+			    time.wMilliseconds, sDEBUG_LOG_TYPE[iLogType], msg);
+#else
 	CTime time = CTime::GetCurrentTime();
 	strWriteLine.Format(_T("%s\t%s\t%s\n"), time.Format(_T("%Y-%m-%d %H:%M:%S")), sDEBUG_LOG_TYPE[iLogType], msg);
+#endif
 
 	_wsetlocale(LC_ALL, _T("jpn"));
 	CStdioFile stdFile;
